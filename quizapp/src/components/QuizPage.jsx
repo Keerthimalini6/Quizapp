@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import {
-    Box
+    Box, Button
 } from "@chakra-ui/react";
-import { QuizResult } from "./QuizResult"
 import { QuizData } from './Data/QuizData'
 import { useNavigate } from "react-router-dom";
+import "../components/Styles/quizpage.css"
 
 export const QuizPage = () => {
     const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -57,33 +57,33 @@ export const QuizPage = () => {
         return `${minutes < 10 ? "0" : ""}${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
     };
     return (
-        <Box>
-            <p className="heading-txt">Quiz APP</p>
-            <Box className="container">
-                <Box>
-                    <h3>{currentQuestion + 1}</h3>
-                    <h5>Timer: {formatTime(timer)}</h5>
+        <Box style={{ position: 'relative', height: '600px', display: 'flex', flexDirection: 'column' }}>
+            <Box className="container" >
+                <p className="heading-txt" style={{ fontSize: "x-larger", fontWeight: "bolder", marginTop: "30px", color: '#15a465' }}>Quiz <span style={{ color: '#5d1c78' }}>APP</span></p>
+                <Box className="timer-box">
+                    <h3 style={{ color: '#15a465' }}>0{currentQuestion + 1} / <span style={{ color: '#5d1c78' }}>05</span></h3>
+                    <h5 style={{ color: '#15a465' }}>Time left: {formatTime(timer)}</h5>
                 </Box>
                 <Box className="question">
-                    <span id="question-number">{currentQuestion + 1}. </span>
                     <span id="question-txt">{QuizData[currentQuestion].question}</span>
                 </Box>
-                <Box className="option-container">
-                    {QuizData[currentQuestion].options.map((option, i) => {
-                        return (
-                            <button
-                                // className="option-btn"
-                                className={`option-btn ${clickedOption == i + 1 ? "checked" : null
-                                    }`}
-                                key={i}
-                                onClick={() => setClickedOption(i + 1)}
-                            >
-                                {option}
-                            </button>
-                        )
-                    })}
-                </Box>
-                <input type="button" value="Next" id="next-button" onClick={changeQuestion} />
+            </Box>
+            <Box className="option-container" style={{ marginTop: 'auto' }}>
+                {QuizData[currentQuestion].options.map((option, i) => {
+                    return (
+                        <Button
+                            className={`option-btn ${clickedOption === i + 1 ? "checked" : ""}`}
+                            key={i}
+                            onClick={() => setClickedOption(i + 1)}
+                            style={{ backgroundColor: clickedOption === i + 1 ? "#5d1c78" : "white", color: clickedOption === i + 1 ? "white" : "black" }}
+                        >
+                            {option}
+                        </Button>
+                    )
+                })}
+                <Button onClick={changeQuestion} bg="#15a465" color="white" mr={3} w="30%" margin="auto">
+                    Next
+                </Button>
             </Box>
         </Box>
     )
