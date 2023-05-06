@@ -12,6 +12,7 @@ export const QuizPage = () => {
     const [clickedOption, setClickedOption] = useState(0);
     const navigate = useNavigate();
     const [timer, setTimer] = useState(60);
+    const [totalTime, setTotalTime] = useState(0);
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -29,14 +30,17 @@ export const QuizPage = () => {
     const changeQuestion = () => {
         updateScore();
         if (currentQuestion < QuizData.length - 1) {
+            setTotalTime(totalTime + (60 - timer)); // add time taken to answer the current question to the total time
             setCurrentQuestion(currentQuestion + 1);
             setClickedOption(0);
             setTimer(60);
         } else {
+            setTotalTime(totalTime + (60 - timer)); // add time taken to answer the last question to the total time
             navigate('/quizresult', {
                 state: {
                     score: score,
                     totalScore: QuizData.length,
+                    totalTime: totalTime // pass the total time to the result page
                 }
             });
         }
@@ -65,7 +69,7 @@ export const QuizPage = () => {
                     <h5 style={{ color: '#15a465' }}>Time left: {formatTime(timer)}</h5>
                 </Box>
                 <Box className="question">
-                    <span id="question-txt">{QuizData[currentQuestion].question}</span>
+                    <span style={{ fontSize: "xx-larger", fontWeight: "bolder" }} id="question-txt">{QuizData[currentQuestion].question}</span>
                 </Box>
             </Box>
             <Box className="option-container" style={{ marginTop: 'auto' }}>
@@ -74,14 +78,16 @@ export const QuizPage = () => {
                         <Button
                             className={`option-btn ${clickedOption === i + 1 ? "checked" : ""}`}
                             key={i}
+                            border="1px solid #5d1c78"
+                            marginTop="2"
                             onClick={() => setClickedOption(i + 1)}
-                            style={{ backgroundColor: clickedOption === i + 1 ? "#5d1c78" : "white", color: clickedOption === i + 1 ? "white" : "black" }}
+                            style={{ backgroundColor: clickedOption === i + 1 ? "#5d1c78" : "white", color: clickedOption === i + 1 ? "white" : "black", fontSize: "13.5px" }}
                         >
                             {option}
                         </Button>
                     )
                 })}
-                <Button onClick={changeQuestion} bg="#15a465" color="white" mr={3} w="30%" margin="auto">
+                <Button onClick={changeQuestion} bg="#15a465" color="white" mr={3} w="30%" margin="auto" marginTop="4">
                     Next
                 </Button>
             </Box>

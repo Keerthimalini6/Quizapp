@@ -1,0 +1,29 @@
+.result-box{
+    box-shadow: 0 10px 10px #999;
+    background-color: antiquewhite;
+    width: 80%;
+    height: 25%;
+    margin: auto;
+    border-radius: 70px;
+    margin-top: 30px;
+}
+.result-box-text{
+    color:#5d1c78;
+    font-size: 25px;
+    font-weight: 700;
+}
+.result-box-text2{
+    color:#5d1c78;
+    font-size: 17px;
+    font-weight: 500;
+    margin-top: 10px;
+}
+@media (min-width:400px) and (max-width:1000px) {
+    .result-box-text{
+        font-size: 17px;
+        font-weight: 500;
+    }
+    .result-box-text2{
+        font-size: 15px;
+    }
+}
